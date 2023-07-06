@@ -1,0 +1,16 @@
+version: "3.0"
+services:
+    socat:
+        image: alpine/socat:latest
+        restart: always
+        ports:
+            - 2376:2375
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: "tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock"
+        networks:
+            - jenkins-blueocean_jenkins
+
+networks:
+    jenkins-blueocean_jenkins:
+        external: true
